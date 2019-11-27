@@ -1,5 +1,6 @@
 /* global jQuery: false, window: false, document: false, chrome: false */
 
+const socket = io();
 const RW = (function() {
   // const info = chrome.runtime.getManifest();
   const notifier = jQuery({});
@@ -38,6 +39,25 @@ const RW = (function() {
         let content = '';
 
         switch (params.t) {
+          case 'firebase':
+            switch (params.name) {
+              case 'ScreenView':
+                params.t = 'screenview';
+                content = `[${params.appId}] ${params.screenName}`;
+                break;
+              case 'Interaction':
+                params.t = 'event';
+                content =
+                  `[${params.appId}]` +
+                  [params.eventCategory, params.eventAction, params.eventLabel]
+                    .map(val => val || '<empty>')
+                    .join(' > ');
+                break;
+              default:
+                params.t = 'firebase';
+                content = `[${params.appId}] ${params.name}`;
+            }
+            break;
           case 'pageview':
             if (params.dp) {
               content = (params.dh || '') + params.dp;
@@ -95,6 +115,14 @@ const RW = (function() {
         if (panel.hasClass('filtrado') && !panel.hasClass(params.t)) {
           panel.find();
         }
+      }
+    },
+    firebase_analytics: {
+      handler(params) {
+        modules.universal_analytics.handler({
+          ...params,
+          t: 'firebase'
+        });
       }
     }
   };
@@ -156,8 +184,9 @@ const RW = (function() {
       return escape(str);
     }
   }
-  function init(msg) {
-    modules.universal_analytics.handler(msg);
+  function init({ tool, data }) {
+    console.log(tool, data);
+    if (modules[tool]) modules[tool].handler(data);
   }
 
   return {
@@ -175,7 +204,4 @@ const RW = (function() {
   };
 })();
 
-socket.on('hit sent', msg => {
-  console.log(msg);
-  RW.init(msg);
-});
+socket.on('hit sent', msg => RW.init(msg));

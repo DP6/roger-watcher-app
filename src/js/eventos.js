@@ -18,6 +18,17 @@ jQuery('#autoscroll').on('change', function() {
   RW.autoscroll = this.checked;
 });
 
+jQuery('.connect').on('click', function() {
+  const connect = confirm('Deseja conectar ou desconectar?');
+  const message = connect ? 'create' : 'end';
+  const tool = this.id.split('_').pop();
+  let app;
+  if (connect && tool === 'firebase-analytics')
+    app = prompt('Qual o Bundle ID?');
+
+  socket.emit(`${message}_connection`, { tool, app });
+});
+
 RW.busca.on('keyup', function() {
   const s = new RegExp(this.value, 'i');
   jQuery('.track').each(function() {

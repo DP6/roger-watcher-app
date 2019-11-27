@@ -1,24 +1,24 @@
 window.metadata = {
   universal_analytics: {
     //App Tracking
-    ht:{
-      name: "hit sequence number",
+    ht: {
+      name: 'hit sequence number',
       rule: commonRules.integer
     },
-    aid:{
-      name: "application id",
+    aid: {
+      name: 'application id',
       rule: commonRules.string
     },
-    aiid:{
-      name: "application installer id",
+    aiid: {
+      name: 'application installer id',
       rule: commonRules.string
     },
-    an:{
-      name: "application name",
+    an: {
+      name: 'application name',
       rule: commonRules.string
     },
-    av:{
-      name: "application version",
+    av: {
+      name: 'application version',
       rule: commonRules.string
     },
     // Hit
@@ -240,14 +240,14 @@ window.metadata = {
     },
 
     // // "Custom Dimensions"
-    "cd(\d{3})": {
+    'cd(d{3})': {
       name: 'dimension $1',
       length: 150,
       rule: commonRules.string
     },
 
     // "Custom Metric"
-    "cm(\d{3})": {
+    'cm(d{3})': {
       name: 'metric $1',
       rule: commonRules.integer
     },
@@ -333,12 +333,12 @@ window.metadata = {
     },
 
     // "System Info"
-    _s:{
-      name:"hit sequence",
+    _s: {
+      name: 'hit sequence',
       rule: commonRules.integer
     },
-    _v:{
-      name:"sdk version number",
+    _v: {
+      name: 'sdk version number',
       rule: commonRules.string
     },
     sr: {
@@ -415,5 +415,5 @@ window.metadata = {
 //     name:`metric ${i}`,
 //     rule: commonRules.integer
 //   }
-  
+
 // }

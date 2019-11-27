@@ -7,12 +7,12 @@ jQuery('.filter').on('click', 'a', function() {
     .toggleClass('filtrado', jQuery('.checked').length > 0);
 });
 
-jQuery('.clear-filter').on('click', function() {
+jQuery('#clear_filter').on('click', function() {
   jQuery('.checked').removeClass('checked');
   RW.panel.removeClass();
 });
 
-jQuery('.clear-report').on('click', () => RW.clear());
+jQuery('#clear_report').on('click', () => RW.clear());
 
 jQuery('#autoscroll').on('change', function() {
   RW.autoscroll = this.checked;

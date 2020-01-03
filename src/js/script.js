@@ -13,7 +13,7 @@ const RW = (function() {
     item: ['ti', 'in']
   };
   const modules = {
-    universal_analytics: {
+    google_analytics: {
       template: jQuery(jQuery('#template-universal').html()),
       parseByType(type, params) {
         if (!requiredParameters[type]) return [];
@@ -37,7 +37,7 @@ const RW = (function() {
       },
       handler(params) {
         let content = '';
-
+        console.log(params);
         switch (params.t) {
           case 'firebase':
             switch (params.name) {
@@ -119,7 +119,7 @@ const RW = (function() {
     },
     firebase_analytics: {
       handler(params) {
-        modules.universal_analytics.handler({
+        modules.google_analytics.handler({
           ...params,
           t: 'firebase'
         });

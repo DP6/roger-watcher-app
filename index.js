@@ -59,7 +59,7 @@ function startGA() {
             }, {});
         });
       hits.forEach(hit => {
-        io.emit('hit sent', { ...hit, tool: 'google_analytics' });
+        io.emit('hit sent', { data: hit, tool: 'google_analytics' });
         //console.table(hit);
       });
     }
@@ -77,7 +77,7 @@ function endGA() {
 
 function startFirebase(app) {
   endInstance('fa-debug', 'fa-verbose', 'fa-verbose-svc', 'fa-main');
-
+  console.log('oi');
   createADBInstance({
     name: 'fa-debug',
     params: ['shell', 'setprop', 'debug.firebase.analytics.app', app],
@@ -174,4 +174,7 @@ try {
   console.error($$e);
 }
 
-startFirebase('com.itau.aco');
+//startFirebase('com.itau.aco');
+
+//startFirebase('com.itaucard.activity');
+startGA();

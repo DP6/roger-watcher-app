@@ -1,87 +1,71 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Roger Watcher - by dp6</title>
 
-    <link
-      href="https://fonts.googleapis.com/css?family=Roboto"
-      rel="stylesheet"
-    />
-    <!-- @dev-css -->
-    <link rel="stylesheet" type="text/css" href="./css/normalize.css" />
-    <link rel="stylesheet" type="text/css" href="./css/style.css" />
-    <!-- dev-css@ -->
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <title>Roger Watcher - by dp6</title>
 
-  <body>
-    <header>
-      <a
-        href="http://www.dp6.com.br/?utm_medium=logo&amp;utm_source=plugin&amp;utm_campaign=roger-watcher"
-        title="Roger Watcher - dp6 TECH"
-        id="logo"
-        target="blank"
-      >
-        <img src="icons/icon36.png" alt="dp6.com.br" />
-      </a>
-      <ul class="filter">
-        <li><a href="#" title="PageView" class="pageview"></a></li>
-        <li><a href="#" title="AppView" class="appview"></a></li>
-        <li><a href="#" title="Event" class="event"></a></li>
-        <li><a href="#" title="Timing" class="timing"></a></li>
-        <li><a href="#" title="Social" class="social"></a></li>
-        <li><a href="#" title="Item" class="item"></a></li>
-        <li><a href="#" title="Transaction" class="transaction"></a></li>
-        <li><a href="#" title="Exception" class="exception"></a></li>
-        <li><a href="#" title="AppView" class="appview"></a></li>
-        <li><a href="#" title="Firebase" class="firebase"></a></li>
-      </ul>
-      <button class="button button-left clear" id="clear_filter">
-        Clear Filters</button
-      ><button class="button button-right clear" id="clear_report">
-        Clear Report
-      </button>
-      <input id="busca" type="text" placeholder=" Search here..." />
-      <label title="Should scroll to the bottom whenever a new hit is parsed"
-        ><input
-          type="checkbox"
-          name="autoscroll"
-          id="autoscroll"
-          checked
-        /><span>Autoscroll</span></label
-      >
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
+  <!-- @dev-css -->
+  <link rel="stylesheet" type="text/css" href="./css/normalize.css" />
+  <link rel="stylesheet" type="text/css" href="./css/style.css" />
+  <!-- dev-css@ -->
+</head>
 
-      <button class="button button-left connect" id="connect_google-analytics">
-        GA</button
-      ><button
-        class="button button-right connect"
-        id="connect_firebase-analytics"
-      >
-        Firebase
-      </button>
-      <hr id="stripes" />
-    </header>
-    <section id="panel"></section>
-    <script type="text/html" id="template-universal">
-      <div class="track">
-      	<hr class="label">
-      	<section>
-      		<p class="content"></p>
-      		<div class="qsWrapper">
-      			<table class="queryString"></table>
-      		</div>
-      	</section>
-      	<a href="#" class="delete" title="Remove"></a>
-      </div>
-    </script>
-    <!-- @dev-js -->
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="./js/rules.js"></script>
-    <script src="./js/metadata.js"></script>
-    <script src="./js/jquery.js"></script>
-    <script src="./js/script.js"></script>
-    <script src="./js/eventos.js"></script>
-    <!-- <script src="./js/tagueamento.js"></script> -->
-    <!-- dev-js@ -->
-  </body>
+<body>
+  <header>
+    <a href="http://www.dp6.com.br/?utm_medium=logo&amp;utm_source=plugin&amp;utm_campaign=roger-watcher"
+      title="Roger Watcher - dp6 TECH" id="logo" target="blank">
+      <img src="icons/icon36.png" alt="dp6.com.br" />
+    </a>
+    <ul class="filter">
+      <li><a href="#" title="PageView" class="pageview"></a></li>
+      <li><a href="#" title="AppView" class="appview"></a></li>
+      <li><a href="#" title="Event" class="event"></a></li>
+      <li><a href="#" title="Timing" class="timing"></a></li>
+      <li><a href="#" title="Social" class="social"></a></li>
+      <li><a href="#" title="Item" class="item"></a></li>
+      <li><a href="#" title="Transaction" class="transaction"></a></li>
+      <li><a href="#" title="Exception" class="exception"></a></li>
+      <li><a href="#" title="AppView" class="appview"></a></li>
+      <li><a href="#" title="Firebase" class="firebase"></a></li>
+    </ul>
+    <button class="button button-left clear" id="clear_filter">
+      Clear Filters</button><button class="button button-right clear" id="clear_report">
+      Clear Report
+    </button>
+    <input id="busca" type="text" placeholder=" Search here..." />
+    <label title="Should scroll to the bottom whenever a new hit is parsed"><input type="checkbox" name="autoscroll"
+        id="autoscroll" checked /><span>Autoscroll</span></label>
+
+    <button class="button button-left connect" id="connect-google_analytics">
+      GA</button><button class="button button-right connect" id="connect-firebase_analytics">
+      Firebase
+    </button>
+    <hr id="stripes" />
+  </header>
+  <section id="panel"></section>
+  <script type="text/html" id="template-universal">
+    <div class="track">
+      <hr class="label">
+      <section>
+        <p class="content"></p>
+        <div class="qsWrapper">
+          <table class="queryString"></table>
+        </div>
+      </section>
+      <a href="#" class="delete" title="Remove"></a>
+    </div>
+  </script>
+  <!-- @dev-js -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="./js/rules.js"></script>
+  <script src="./js/metadata.js"></script>
+  <script src="./js/jquery.js"></script>
+  <script src="./js/script.js"></script>
+  <script src="./js/eventos.js"></script>
+  <!-- <script src="./js/tagueamento.js"></script> -->
+  <!-- dev-js@ -->
+</body>
+
 </html>

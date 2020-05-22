@@ -21,9 +21,9 @@ jQuery('#autoscroll').on('change', function() {
 jQuery('.connect').on('click', function() {
   const connect = confirm('Deseja conectar ou desconectar?');
   const message = connect ? 'create' : 'end';
-  const tool = this.id.split('_').pop();
+  const tool = this.id.split('-').pop();
   let app;
-  if (connect && tool === 'firebase-analytics')
+  if (connect && tool === 'firebase_analytics')
     app = prompt('Qual o Bundle ID?');
 
   socket.emit(`${message}_connection`, { tool, app });

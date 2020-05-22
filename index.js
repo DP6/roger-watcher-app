@@ -6,7 +6,7 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const fs = require('fs');
 const ga_token = 'Hit delivery requested: ';
-const firebase_token = /FA-SVC\s*:\s*Event recorded:\s*/;
+const firebase_token = 'Logging event';
 const instances = {};
 
 app.use(express.static(path.join(__dirname, '/src')));
@@ -34,19 +34,19 @@ function startGA() {
 
   createADBInstance({
     name: 'ga-debug',
-    params: ['shell', 'setprop', 'log.tag.GAv4', 'DEBUG'],
-    handler: console.log
+    params: ['shell', 'setprop', 'log.tag.GAv4-SVC', 'DEBUG'],
+    handler: console.log,
   });
 
   createADBInstance({
     name: 'ga-logcat',
-    params: ['logcat'],
-    handler: data => {
+    params: ['logcat', '-v', 'time', '-s', 'GAv4-SVC'],
+    handler: (data) => {
       const hits = String(data)
         .split('\n')
-        .filter(txt => txt.indexOf(ga_token) >= 0)
-        .map(txt => {
-          console.log(txt);
+        .filter((txt) => txt.indexOf(ga_token) >= 0)
+        .map((txt) => {
+          //console.log(txt);
 
           return txt
             .split(ga_token)
@@ -58,11 +58,11 @@ function startGA() {
               return acc;
             }, {});
         });
-      hits.forEach(hit => {
+      hits.forEach((hit) => {
         io.emit('hit sent', { data: hit, tool: 'google_analytics' });
         //console.table(hit);
       });
-    }
+    },
   });
 }
 
@@ -71,7 +71,7 @@ function endGA() {
   createADBInstance({
     name: 'ga-debug-end',
     params: ['shell', 'setprop', 'log.tag.GAv4', 'DEBUG'],
-    handler: console.log
+    handler: console.log,
   });
 }
 
@@ -81,43 +81,41 @@ function startFirebase(app) {
   createADBInstance({
     name: 'fa-debug',
     params: ['shell', 'setprop', 'debug.firebase.analytics.app', app],
-    handler: console.log
+    handler: console.log,
   });
   createADBInstance({
     name: 'fa-verbose',
     params: ['shell', 'setprop', 'log.tag.FA', 'VERBOSE'],
-    handler: console.log
+    handler: console.log,
   });
   createADBInstance({
     name: 'fa-verbose-svc',
     params: ['shell', 'setprop', 'log.tag.FA-SVC', 'VERBOSE'],
-    handler: console.log
+    handler: console.log,
   });
 
   createADBInstance({
     name: 'fa-main',
-    params: ['logcat'],
-    handler: data => {
+    //params: ['logcat'],
+    params: ['logcat', '-v', 'time', '-e', '"Logging event:"'],
+    handler: (data) => {
       const hits = String(data)
         .split('\n')
-        .filter(txt => txt.match(firebase_token))
-        .map(txt => {
+        .filter((txt) => txt.match(firebase_token))
+        .map((txt) => {
           //console.log(txt);
-          const event = txt
-            .split(firebase_token)
-            .pop()
-            .slice(6, -2);
+          const event = txt.split(firebase_token).pop().slice(6, -2);
           const [, bundle] = event.match(/Bundle\[\{(.*)\}\]/);
           const data = event.replace(`Bundle[{${bundle}}]`, '[]');
           const res = { ...parse(data), ...parse(bundle) };
 
           return res;
         });
-      hits.forEach(data => {
+      hits.forEach((data) => {
         io.emit('hit sent', { data, tool: 'firebase_analytics' });
-        //console.table(hit);
+        console.table(hit);
       });
-    }
+    },
   });
 }
 
@@ -134,7 +132,7 @@ function endFirebase() {
   createADBInstance({
     name: 'fa-debug-end',
     params: ['shell', 'setprop', 'debug.firebase.analytics.app', '.none.'],
-    handler: console.log
+    handler: console.log,
   });
 }
 
@@ -146,17 +144,17 @@ function createADBInstance({ name, params, handler }) {
 
   instance.stdout.on('data', handler);
 
-  instance.stderr.on('data', data => {
+  instance.stderr.on('data', (data) => {
     console.error(`stderr: ${data}`);
   });
 
-  instance.on('close', code => {
+  instance.on('close', (code) => {
     console.log(`child process exited with code ${code}`);
   });
 }
 
 function endInstance(...names) {
-  names.forEach(name => {
+  names.forEach((name) => {
     const instance = instances[name];
     if (!instance) return;
 
@@ -168,13 +166,6 @@ function endInstance(...names) {
   });
 }
 
-try {
-  fs.unlinkSync('teste.txt');
-} catch ($$e) {
-  console.error($$e);
-}
-
-//startFirebase('com.itau.aco');
-
 //startFirebase('com.itaucard.activity');
 startGA();
+startFirebase('com.itau.pers');
